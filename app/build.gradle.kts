@@ -55,10 +55,10 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-//    val lifecycle_version = "2.6.2"
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-//    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-//    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     val lifecycle_version = "2.1.0"
 
@@ -66,18 +66,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-extensions:$lifecycle_version")
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
-//    val lifecycle_version = "2.7.0"
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-//    // ViewModel utilities for Compose
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
-//    // LiveData
-//    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-//    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
-//    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
 
     val room_version = "2.6.0"
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
+    implementation ("androidx.room:room-ktx:2.6.1")
 
     implementation("com.squareup.picasso:picasso:2.8")
 
