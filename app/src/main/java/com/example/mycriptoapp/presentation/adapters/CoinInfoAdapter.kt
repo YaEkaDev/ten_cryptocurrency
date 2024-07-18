@@ -17,6 +17,10 @@ class CoinInfoAdapter(private val context: Context) : ListAdapter<CoinInfo, Coin
 //            field = value
 //            notifyDataSetChanged()
 //        }
+
+
+
+
     var onCoinClickListener: OnCoinClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinInfoViewHolder {
