@@ -11,7 +11,10 @@ import com.squareup.picasso.Picasso
 
 class CoinDetailFragment() : Fragment() {
 
-    private lateinit var binding: FragmentCoinDetailBinding
+    private var _binding: FragmentCoinDetailBinding? = null
+    private val binding: FragmentCoinDetailBinding
+        get() = _binding ?: throw RuntimeException("FragmentCoinDetailBinding is null")
+
     private lateinit var viewModel: CoinViewModel
     private var fSymbol = FSYM_UNKNOWN
 
@@ -33,7 +36,7 @@ class CoinDetailFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentCoinDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentCoinDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,10 +62,15 @@ class CoinDetailFragment() : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     companion object {
         private const val EXTRA_FROM_SYMBOL = "fSym"
         private const val FSYM_UNKNOWN = ""
-        fun newInstance(fSym: String): CoinDetailFragment {
+        fun newInstance(fSym: String): Fragment {
             return CoinDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(EXTRA_FROM_SYMBOL, fSym)

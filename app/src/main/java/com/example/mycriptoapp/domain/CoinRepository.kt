@@ -7,6 +7,6 @@ interface CoinRepository {
 
     fun getCoinList(): LiveData<List<CoinInfo>>
 
-    suspend fun loadData()
+    fun loadData()
 
 }

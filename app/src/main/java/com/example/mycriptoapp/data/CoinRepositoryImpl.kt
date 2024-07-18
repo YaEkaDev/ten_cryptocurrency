@@ -3,13 +3,16 @@ package com.example.mycriptoapp.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.example.mycriptoapp.data.network.ApiFactory
 import com.example.mycriptoapp.data.database.AppDatabase
+import com.example.mycriptoapp.data.workers.RefreshDataWorker
 import com.example.mycriptoapp.domain.CoinInfo
 import com.example.mycriptoapp.domain.CoinRepository
 import kotlinx.coroutines.delay
 
-class CoinRepositoryImpl(application: Application):CoinRepository {
+class CoinRepositoryImpl(private val application: Application):CoinRepository {
 
     private val coinPriceListDao = AppDatabase.getInstance(application).coinPriceInfoDao()
     private val mapper = CoinMapper()
@@ -28,23 +31,12 @@ class CoinRepositoryImpl(application: Application):CoinRepository {
             }
         }
 
-    override suspend fun loadData() {
-
-        while (true) {
-            try {
-                ApiFactory.apiService.getTopCoinsInfo().apply {
-                    val top = this.names?.map { it.coinName?.name }?.joinToString(",")
-                    if (top != null) {
-                        ApiFactory.apiService.getFullPriceList(fSyms = top).apply {
-                            val listDto = mapper.mapJsonContainerToListCoinInfoDto(this)
-                            coinPriceListDao.insertPriceList(mapper.mapListDtoToListDbModel(listDto))
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                TODO("Not yet implemented")
-            }
-            delay(10000)
-        }
+    override fun loadData() {
+        val workManager = WorkManager.getInstance(application)
+        workManager.enqueueUniqueWork(
+            RefreshDataWorker.NAME,
+            ExistingWorkPolicy.REPLACE,
+            RefreshDataWorker.makeRequest()
+        )
     }
 }
