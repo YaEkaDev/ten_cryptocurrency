@@ -34,7 +34,10 @@ class CoinInfoAdapter(private val context: Context) : ListAdapter<CoinInfo, Coin
         with(holder) {
             binding.tvSymbs.text = String.format(context.resources.getString(R.string.symbs_template), coin.fromsymbol,coin.tosymbol)
             binding.tvCourse.text = coin.price.toString()
-            //binding.tvLastDate.text = String.format(context.resources.getString(R.string.last_update_template), coin.lastupdate)
+            binding.tvLastDate.text = String.format(context.resources.getString(R.string.last_update_template), coin.lastupdate)
+            binding.tvSymbs.text = String.format(context.resources.getString(R.string.symbs_template), coin.fromsymbol,coin.tosymbol)
+            //binding.tvCourse.text = coin.price.toString()
+            binding.tvLastDate.text = String.format(context.resources.getString(R.string.last_update_template), coin.lastupdate)
             Picasso.get().load(coin.imageurl).into(binding.ivLogoCoin)
             itemView.setOnClickListener { onCoinClickListener?.onCoinClick(coin) }
         }

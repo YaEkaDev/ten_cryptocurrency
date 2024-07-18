@@ -41,11 +41,7 @@ class CoinPriceListActivity : AppCompatActivity() {
                     launchFragment(CoinDetailFragment.newInstance(coinPriceInfo.fromsymbol))
                 }
                 else {
-                    val intent = CoinDetailActivity.newIntent(
-                        this@CoinPriceListActivity,
-                        coinPriceInfo.fromsymbol
-                    )
-                    startActivity(intent)
+                    launchDetailActivity(coinPriceInfo.fromsymbol)
                 }
             }
         }
@@ -53,11 +49,19 @@ class CoinPriceListActivity : AppCompatActivity() {
     }
 
     private fun launchFragment(fragment: Fragment){
-        supportFragmentManager.popBackStack()
+        supportFragmentManager.popBackStack()//удаляю старый фрагмент
         supportFragmentManager.beginTransaction()
             .replace(R.id.coinInfoContainerLand, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun launchDetailActivity(fSym: String){
+        val intent = CoinDetailActivity.newIntent(
+            this@CoinPriceListActivity,
+            fSym
+        )
+        startActivity(intent)
     }
 
     private fun isOneColumnMode(): Boolean{
